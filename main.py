@@ -1,5 +1,5 @@
 # sort my list:
-def sortList(l):
+def sortListbyDate(l):
    print("The unsorted list is:", l)
    for x in range(len(l)):
     check_swap = False
@@ -93,7 +93,7 @@ def exitUser():
 
 file = open('tickets.txt')
 my_list= list(file)
-sortList(my_list)
+sortListbyDate(my_list)
 file.close()
 print("WELCOME!!! Here's the Login Form:")
 login_type = displayLogin()
