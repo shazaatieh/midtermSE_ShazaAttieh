@@ -105,8 +105,20 @@ def displayStatistics(l):
    print("---->> The event Id that has the highest nb of tickets is : "+ev_id)      
 
    print("")      
-def bookTicketAdmin():
-   pass 
+def bookTicketAdmin(l):
+   #https://stackoverflow.com/questions/57701738/what-is-use-0-in-input-split0
+   larg_ticket = max(int(info.split(',')[0][4:]) for info in l)
+   usern = input("Enter your username : ")
+   event_id = input("Enter the event Id you want :(ev101/111/121/131) ")
+   date_event = input("Enter the date of the event (YYYYMMDD): (202308(03->06))")
+   priority = input("Enter the priority: ")
+   ticket_id = larg_ticket + 10
+   ur_ticket = str(ticket_id) + ", "+ event_id +", " + usern +", " + date_event +", " + priority
+   #https://www.w3schools.com/python/ref_list_append.asp
+   l.append(ur_ticket)
+   sortList(l)
+   print("---->>Your ticket is booked successfully!")
+
 
 def displayAllTickets():
    pass
@@ -147,7 +159,7 @@ if login_type == "admin" :
       if choice == 1:
         displayStatistics(my_list)
       elif choice == 2:
-        bookTicketAdmin()
+        bookTicketAdmin(my_list)
       elif choice == 3:
         displayAllTickets()
       elif choice == 4:
