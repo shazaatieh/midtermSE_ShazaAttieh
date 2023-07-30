@@ -13,9 +13,19 @@ def sortListbyDate(l):
         temp = l[y]
         l[y] = l[y + 1]
         l[y + 1] = temp
-    if not check_swap:  
-       print("The sorted list is:", l)
-       return l
+       if(l[y].split(",")[3] ==  l[y+1].split(",")[3]):
+        split_ti= l[y].split(",")
+        pri_i= split_ti[-1]
+        split_tj= l[y+1].split(",")
+        pri_j = split_tj[-1]
+        if pri_i > pri_j:
+            check_swap = True
+            temp = l[y]
+            l[y] = l[y + 1]
+            l[y + 1] = temp 
+    if not check_swap: 
+        print("The sorted list is:", l)
+        return l
          
 # the admin Menu :
 def adminMenu():
