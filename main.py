@@ -1,10 +1,22 @@
-#print("list:")
-file = open('tickets.txt')
-my_list= list(file)
-#print(my_list)
-file.close()
-
-
+# sort my list:
+def sortList(l):
+   print("The unsorted list is:", l)
+   for x in range(len(l)):
+    check_swap = False
+    for y in range(len(l) - x - 1):
+       split_termi= l[y].split(",")
+       date_init = split_termi[3]
+       split_termj= l[y+1].split(",")
+       datej = split_termj[3]
+       if date_init > datej:
+        check_swap = True
+        temp = l[y]
+        l[y] = l[y + 1]
+        l[y + 1] = temp
+    if not check_swap:  
+       print("The sorted list is:", l)
+       return l
+         
 # the admin Menu :
 def adminMenu():
     print("Hello, Admin!")
@@ -78,6 +90,11 @@ def exitUser():
 
 
 #main prog:
+
+file = open('tickets.txt')
+my_list= list(file)
+sortList(my_list)
+file.close()
 print("WELCOME!!! Here's the Login Form:")
 login_type = displayLogin()
 choice = eval(input("Enter your choice: "))
