@@ -1,5 +1,5 @@
 # sort my list:
-def sortListbyDate(l):
+def sortList(l):
    print("The unsorted list is:", l)
    for x in range(len(l)):
     check_swap = False
@@ -29,6 +29,7 @@ def sortListbyDate(l):
          
 # the admin Menu :
 def adminMenu():
+    print("-----------------------------------------------------------------------------------------------------")
     print("Hello, Admin!")
     print("Your Menu Options :")
     print("1. Display Statistics")
@@ -38,12 +39,15 @@ def adminMenu():
     print("5. Disable Ticket")
     print("6. Run Events")
     print("7. Exit")
+    print("-----------------------------------------------------------------------------------------------------")
 #
 def userMenu(username):
+    print("-----------------------------------------------------------------------------------------------------")
     print("Hello, " + username+"!")
     print("Your Menu Options :")
     print("1. Book a ticket")
     print("2. Exit")
+    print("-----------------------------------------------------------------------------------------------------")
 
 # the login function:
 def displayLogin():
@@ -70,8 +74,37 @@ def displayLogin():
  
  
 #Admin functions:
-def displayStatistics():
-   pass
+def displayStatistics(l):
+   count_101 = 0
+   count_111 = 0
+   count_121 = 0
+   count_131 = 0
+   highstNb = 0
+   ev_id = 0
+   for i in range(len(l)):
+      
+      if l[i].split(",")[1] == " ev101":
+         count_101 += 1
+      elif l[i].split(",")[1] == " ev111": 
+         count_111 += 1
+      elif l[i].split(",")[1] == " ev121": 
+         count_121 += 1     
+      else:
+         count_131 +=1   
+    # i searched for a max function: https://www.w3schools.com/python/ref_func_max.asp
+   highstNb = max(count_101, count_111, count_121, count_131)
+   if(highstNb == count_101):
+      ev_id = "ev101"
+   elif(highstNb == count_111):
+      ev_id = "ev111" 
+   elif(highstNb == count_121):
+      ev_id = "ev121"
+   else:
+      ev_id ="ev131"  
+   print("            ")      
+   print("---->> The event Id that has the highest nb of tickets is : "+ev_id)      
+
+   print("")      
 def bookTicketAdmin():
    pass 
 
@@ -103,15 +136,16 @@ def exitUser():
 
 file = open('tickets.txt')
 my_list= list(file)
-sortListbyDate(my_list)
+sortList(my_list)
 file.close()
+print("-----------------------------------------------------------------------------------------------------------")
 print("WELCOME!!! Here's the Login Form:")
 login_type = displayLogin()
 choice = eval(input("Enter your choice: "))
 if login_type == "admin" :
     while choice != 7: #while user does not want to exit execute the loop
       if choice == 1:
-        displayStatistics()
+        displayStatistics(my_list)
       elif choice == 2:
         bookTicketAdmin()
       elif choice == 3:
