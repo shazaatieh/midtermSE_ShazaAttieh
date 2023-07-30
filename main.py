@@ -1,1 +1,109 @@
-print("hello")
+#print("list:")
+file = open('tickets.txt')
+my_list= list(file)
+#print(my_list)
+file.close()
+
+
+# the admin Menu :
+def adminMenu():
+    print("Hello, Admin!")
+    print("Your Menu Options :")
+    print("1. Display Statistics")
+    print("2. Book a Ticket")
+    print("3. Display all Tickets")
+    print("4. Change Ticket’s Priority")
+    print("5. Disable Ticket")
+    print("6. Run Events")
+    print("7. Exit")
+#
+def userMenu(username):
+    print("Hello, " + username+"!")
+    print("Your Menu Options :")
+    print("1. Book a ticket")
+    print("2. Exit")
+
+# the login function:
+def displayLogin():
+    times = 5
+    while times > 0:
+        usr_name = input("Enter your Userame: ")
+        passw = input("Enter your Password (leave it empty if you're not an admin): ")
+
+        if usr_name.lower() == "admin" and passw == "admin123123":
+            adminMenu()
+            return "admin"
+            break
+        elif passw == "":
+            userMenu(usr_name)
+            return usr_name
+            break
+        else:
+            times -= 1
+            print("Incorrect Username and/or Password.")
+            if times > 0:
+                print(f"You have {times} attempts remaining.")
+            else:
+                print("You have exceeded the maximum number of attempts.")
+ 
+ 
+#Admin functions:
+def displayStatistics():
+   pass
+def bookTicketAdmin():
+   pass 
+
+def displayAllTickets():
+   pass
+
+def changePriority():
+   pass
+
+def disableTicket():
+   pass
+
+def runEvents():
+   pass
+
+def exitAdmin():
+   pass
+
+
+# User Functions:
+def bookTicketUser():
+   pass
+
+def exitUser():
+   pass
+
+
+#main prog:
+print("WELCOME!!! Here's the Login Form:")
+login_type = displayLogin()
+choice = eval(input("Enter your choice: "))
+if login_type == "admin" :
+    while choice != 7: #while user does not want to exit execute the loop
+      if choice == 1:
+        displayStatistics()
+      elif choice == 2:
+        bookTicketAdmin()
+      elif choice == 3:
+        displayAllTickets()
+      elif choice == 4:
+        changePriority()
+      elif choice ==5:
+        disableTicket()  
+      elif choice == 6:
+        runEvents()   
+      else:
+        exitAdmin()
+      adminMenu()
+      choice = eval(input("Enter your choice: "))
+else:
+    while choice != 2 :
+       if choice == 1 :
+          bookTicketUser()
+       else:
+          exitUser()
+       userMenu(login_type)   
+       choice = eval(input("Enter your choice: "))    

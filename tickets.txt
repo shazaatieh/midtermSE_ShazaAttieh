@@ -1,0 +1,17 @@
+tick110, ev101, nadia, 20230805, 4
+tick105, ev111, karim, 20230803, 6
+tick080, ev121, hassan, 20230804, 5
+tick100, ev131, bassima, 20230806, 3
+tick121, ev101, shadi, 20230803, 2
+tick140, ev111, fadi, 20230806, 1
+tick114, ev121, ziad, 20230805, 6
+tick150, ev121, majida, 20230804, 1
+tick145, ev111, bassem, 20230805, 2
+tick116, ev101, ahmad, 20230804, 3
+tick119, ev131, hoda, 20230803, 7
+tick123, ev101, mona, 20230806, 7
+tick132, ev101, fida, 20230805, 3
+tick100, ev131, wael, 20230806, 2
+tick132, ev111, lara, 20230805, 2
+tick106, ev111, karim, 20230804, 6
+tick112, ev111, shaza, 20230803, 5
