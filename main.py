@@ -1,6 +1,5 @@
 # sort my list:
 def sortList(l):
-   print("The unsorted list is:", l)
    for x in range(len(l)):
     check_swap = False
     for y in range(len(l) - x - 1):
@@ -41,7 +40,7 @@ def adminMenu():
     print("6. Run Events")
     print("7. Exit")
     print("-----------------------------------------------------------------------------------------------------")
-#
+# the user Menu
 def userMenu(username):
     print("-----------------------------------------------------------------------------------------------------")
     print("Hello, " + username+"!")
@@ -75,6 +74,7 @@ def displayLogin():
  
  
 #Admin functions:
+# to display the ticket that has the highest nb
 def displayStatistics(l):
    count_101 = 0
    count_111 = 0
@@ -105,28 +105,38 @@ def displayStatistics(l):
    print("            ")      
    print("---->> The event Id that has the highest nb of tickets is : "+ev_id)      
 
-   print("")      
+   print("") 
+#to Book a ticket:     
 def bookTicketAdmin(l):
    #https://stackoverflow.com/questions/57701738/what-is-use-0-in-input-split0
    larg_ticket = max(int(info.split(',')[0][4:]) for info in l)
    usern = input("Enter your username : ")
-   event_id = input("Enter the event Id you want :(ev101/111/121/131) ")
-   date_event = input("Enter the date of the event (YYYYMMDD): (202308(03->06))")
+   #https://www.geeksforgeeks.org/python-do-while/
+   while True :
+     event_id = input("Enter the event Id you want :(ev101/111/121/131) ")
+     if event_id =="ev101" or event_id =="ev111" or event_id =="ev121" or event_id =="ev131":
+        break
+   while True :  
+     date_event = int(input("Enter the date of the event (YYYYMMDD): (202308(03->06))"))
+     if date_event < 20230803 or date_event > 20230806:
+        print("Invalid date !!!")
+     if date_event >= 20230803 and  date_event <= 20230806 :
+        break
    priority = input("Enter the priority: ")
    ticket_id = larg_ticket + 10
-   ur_ticket = "tick"+str(ticket_id) + ", "+ event_id +", " + usern +", " + date_event +", " + str(priority)+"\n"
+   ur_ticket = "tick"+str(ticket_id) + ", "+ event_id +", " + usern +", " + str(date_event) +", " + str(priority)+"\n"
    #https://www.w3schools.com/python/ref_list_append.asp
    l.append(ur_ticket)
    sortList(l)
    print("---->>Your ticket is booked successfully!")
 
-
+# to display all the tickets
 def displayAllTickets(l):
    print("The Tickets are: ")
    for info in l:
       print (info)
 
-
+# to change the event priority
 def changePriority(l):
    print("!!! To change a ticket priority enter its eventId and its priority ")
    ev_id = input("Enter the eventId :")
@@ -140,7 +150,7 @@ def changePriority(l):
          date_event = l[i].split(",")[3].strip()
          nw_pr = input("Enter the new priority: ")
          ticket_id = l[i].split(",")[0].strip()
-         ur_ticket = "tick"+str(ticket_id) + ", "+ event_id +", " + usern +", " + date_event +", " + str(nw_pr)+"\n"
+         ur_ticket = str(ticket_id) + ", "+ event_id +", " + usern +", " + date_event +", " + str(nw_pr)+"\n"
          l[i] = ur_ticket
          sortList(l)
          print("---->>Priority is changed successfully!") 
@@ -148,7 +158,7 @@ def changePriority(l):
    if check_change != True:
       print("Ticket Not Found")           
    
-
+# to remove a ticket
 def disableTicket(l):
    # to remove an item at indicx i :https://stackoverflow.com/questions/627435/how-to-remove-an-element-from-a-list-by-index
    print("!!!To remove an Event from the list you should enter your ticket ID")
@@ -165,55 +175,67 @@ def disableTicket(l):
       print("Ticket is successfully removed!!")
    else:
          print("Ticket Not Found") 
-
+# to display today's events and remove it from list
 def runEvents(l):
    x=3
-   print("Today's Events:")
+   print("--->>>Today's Events:")
    for i in range(len(l)):
       if l[i].split(",")[3].strip() == "20230803":
-         print(l[i]) 
+         print("        "+l[i]) 
    #https://stackoverflow.com/questions/4426663/how-do-i-remove-the-first-item-from-a-list      
    while(x >= 0):
       l.pop(x)
       x = x-1           
-   print("List after removing today's events :")
+   print("---->List after removing today's events :")
    displayAllTickets(l)
-
+# to exit and a bonus if the admin want to save his work or no
 def exitAdmin(l):
-   pass
    # To save the change in the file((BONUS)):
    # #https://stackoverflow.com/questions/13089234/replacing-text-in-a-file-with-python
-   #chr = input("Do you want to save your work? y/n")
-   #if chr == "y": 
-   #  with open('tickets.txt') as infile, open('tickets.txt', 'w') as outfile:
-   #   for line in infile:
-   #       for ticket in l.items():
-   #           line = line.replace(ticket)
-   #       outfile.write(line)
-   #  infile.close()     
+   chr = input("Do you want to save your work? (y/n) :")
+   if chr == "y": 
+      with open('tickets.txt', 'w') as writer:
+      # Alternatively you could use
+      # writer.writelines(list)
+         for item in l:
+            writer.writelines(item)
+      writer.close()  
+      print("List after your editing :")
+      displayAllTickets(l)
+      print("Bye Admin !...")
+         
 
 
 # User Functions:
+# to book a ticket by the user
 def bookTicketUser(l,usrname):
    print("To book a ticket follow these steps:")
    larg_ticket = max(int(info.split(',')[0][4:]) for info in l)
-   event_id = input("Enter the event Id you want :(ev101/111/121/131) ")
-   date_event = input("Enter the date of the event (YYYYMMDD): (202308(03->06))")
+   while True :
+     event_id = input("Enter the event Id you want :(ev101/111/121/131) ")
+     if event_id =="ev101" or event_id =="ev111" or event_id =="ev121" or event_id =="ev131":
+        break
+   while True :  
+     date_event = int(input("Enter the date of the event (YYYYMMDD): (202308(03->06))"))
+     if date_event < 20230803 or date_event > 20230806:
+        print("Invalid date !!!")
+     if date_event >= 20230803 and  date_event <= 20230806 :
+        break
    priority = 0
    ticket_id = larg_ticket + 10
-   ur_ticket = "tick"+str(ticket_id) + ", "+ event_id +", " + usrname +", " + date_event +", " + str(priority)+"\n"
+   ur_ticket = "tick"+str(ticket_id) + ", "+ event_id +", " + usrname +", " + str(date_event) +", " + str(priority)+"\n"
    l.append(ur_ticket)
    sortList(l)
    print("---->>Your ticket is booked successfully!")
-
+# make the user exit the prog and save the changes
 def exitUser(l,usrname):
-   # To save the change in the file((BONUS)):
+   # To save the change in the file :
    # #https://stackoverflow.com/questions/13089234/replacing-text-in-a-file-with-python
    #chr = input("Do you want to save your work? y/n")
    #if chr == "y": 
     with open('tickets.txt', 'w') as writer:
     # Alternatively you could use
-    # writer.writelines(reversed(dog_breeds))
+    # writer.writelines(list)
      for item in l:
       writer.writelines(item)
     writer.close()  
@@ -227,6 +249,7 @@ def exitUser(l,usrname):
 
 file = open('tickets.txt')
 my_list= list(file)
+print("The unsorted list is:", my_list)
 sortList(my_list)
 file.close()
 print("-----------------------------------------------------------------------------------------------------------")
@@ -252,7 +275,6 @@ if login_type == "admin" :
       adminMenu()
       choice = eval(input("Enter your choice: "))
     exitAdmin(my_list)  
-    print("Bye Admin!...")  
 else:
     while choice != 2 :
        if choice == 1 :
