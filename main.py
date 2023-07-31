@@ -159,7 +159,8 @@ def disableTicket(l):
          index = i
          break
    if index != -1:
-      l.remove(l[index])
+      rmv = l[index]
+      l.remove(rmv)
       sortList(l)
       print("Ticket is successfully removed!!")
    else:
