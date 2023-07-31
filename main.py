@@ -138,10 +138,10 @@ def changePriority(l):
          usern = l[i].split(",")[2].strip()
          event_id = l[i].split(",")[1].strip()
          date_event = l[i].split(",")[3].strip()
-         priority = input("Enter the new priority: ").strip()
+         nw_pr = input("Enter the new priority: ")
          ticket_id = l[i].split(",")[0].strip()
-         ur_ticket = "tick"+str(ticket_id) + ", "+ event_id +", " + usern +", " + date_event +", " + priority
-         l.append(ur_ticket)
+         ur_ticket = "tick"+str(ticket_id) + ", "+ event_id +", " + usern +", " + date_event +", " + str(nw_pr)
+         l[i] = ur_ticket
          sortList(l)
          print("---->>Priority is changed successfully!") 
          break   
@@ -166,11 +166,29 @@ def disableTicket(l):
    else:
          print("Ticket Not Found") 
 
-def runEvents():
-   pass
+def runEvents(l):
+   x=3
+   print("Today's Events:")
+   for i in range(len(l)):
+      if l[i].split(",")[3].strip() == "20230803":
+         print(l[i]) 
+   #https://stackoverflow.com/questions/4426663/how-do-i-remove-the-first-item-from-a-list      
+   while(x >= 0):
+      l.pop(x)
+      x = x-1           
+   print("List after removing today's events :")
+   displayAllTickets(l)
 
-def exitAdmin():
-   pass
+def exitAdmin(l):
+   # To save the change in the file
+   # #https://stackoverflow.com/questions/13089234/replacing-text-in-a-file-with-python
+   # with open('tickets.txt') as infile, open('tickets.txt', 'w') as outfile:
+   #  for line in infile:
+   #      for ticket in l.items():
+   #          line = line.replace(ticket)
+   #      outfile.write(line)
+   # infile.close()     
+   print("Prog exited")
 
 
 # User Functions:
@@ -204,11 +222,12 @@ if login_type == "admin" :
       elif choice ==5:
         disableTicket(my_list)  
       elif choice == 6:
-        runEvents()   
+        runEvents(my_list)   
       else:
-        exitAdmin()
+        exitAdmin(my_list)
       adminMenu()
       choice = eval(input("Enter your choice: "))
+    print("Bye Admin!...")  
 else:
     while choice != 2 :
        if choice == 1 :
