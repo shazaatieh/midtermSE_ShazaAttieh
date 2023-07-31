@@ -5,25 +5,26 @@ def sortList(l):
     check_swap = False
     for y in range(len(l) - x - 1):
        split_termi= l[y].split(",")
-       date_init = split_termi[3]
+       date_init = split_termi[3].strip()
        split_termj= l[y+1].split(",")
-       datej = split_termj[3]
+       datej = split_termj[3].strip()
        if date_init > datej:
         check_swap = True
         temp = l[y]
         l[y] = l[y + 1]
         l[y + 1] = temp
-       if(l[y].split(",")[3] ==  l[y+1].split(",")[3]):
+       if(l[y].split(",")[3].strip() ==  l[y+1].split(",")[3].strip()):
         split_ti= l[y].split(",")
-        pri_i= split_ti[-1]
+        pri_i= split_ti[-1].strip()
         split_tj= l[y+1].split(",")
-        pri_j = split_tj[-1]
+        pri_j = split_tj[-1].strip()
         if pri_i > pri_j:
             check_swap = True
             temp = l[y]
             l[y] = l[y + 1]
             l[y + 1] = temp 
     if not check_swap: 
+        print("--------------------------------------------------------------------------------------------------")
         print("The sorted list is:", l)
         return l
          
@@ -82,12 +83,12 @@ def displayStatistics(l):
    highstNb = 0
    ev_id = 0
    for i in range(len(l)):
-      
-      if l[i].split(",")[1] == " ev101":
+      #https://stackoverflow.com/questions/8270092/remove-all-whitespace-in-a-string
+      if l[i].split(",")[1].strip() == "ev101":
          count_101 += 1
-      elif l[i].split(",")[1] == " ev111": 
+      elif l[i].split(",")[1].strip() == "ev111": 
          count_111 += 1
-      elif l[i].split(",")[1] == " ev121": 
+      elif l[i].split(",")[1].strip() == "ev121": 
          count_121 += 1     
       else:
          count_131 +=1   
@@ -113,21 +114,56 @@ def bookTicketAdmin(l):
    date_event = input("Enter the date of the event (YYYYMMDD): (202308(03->06))")
    priority = input("Enter the priority: ")
    ticket_id = larg_ticket + 10
-   ur_ticket = str(ticket_id) + ", "+ event_id +", " + usern +", " + date_event +", " + priority
+   ur_ticket = "tick"+str(ticket_id) + ", "+ event_id +", " + usern +", " + date_event +", " + priority
    #https://www.w3schools.com/python/ref_list_append.asp
    l.append(ur_ticket)
    sortList(l)
    print("---->>Your ticket is booked successfully!")
 
 
-def displayAllTickets():
-   pass
+def displayAllTickets(l):
+   print("The Tickets are: ")
+   for info in l:
+      print (info)
 
-def changePriority():
-   pass
 
-def disableTicket():
-   pass
+def changePriority(l):
+   print("!!! To change a ticket priority enter its eventId and its priority ")
+   ev_id = input("Enter the eventId :")
+   ev_pr = input("Enter its old priority :")
+   check_change = False
+   for i in range(len(l)):
+      if (l[i].split(",")[1].strip() == ev_id) and  l[i].split(",")[-1].strip() == ev_pr:
+         check_change = True
+         usern = l[i].split(",")[2].strip()
+         event_id = l[i].split(",")[1].strip()
+         date_event = l[i].split(",")[3].strip()
+         priority = input("Enter the new priority: ").strip()
+         ticket_id = l[i].split(",")[0].strip()
+         ur_ticket = "tick"+str(ticket_id) + ", "+ event_id +", " + usern +", " + date_event +", " + priority
+         l.append(ur_ticket)
+         sortList(l)
+         print("---->>Priority is changed successfully!") 
+         break   
+   if check_change != True:
+      print("Ticket Not Found")           
+   
+
+def disableTicket(l):
+   # to remove an item at indicx i :https://stackoverflow.com/questions/627435/how-to-remove-an-element-from-a-list-by-index
+   print("!!!To remove an Event from the list you should enter your ticket ID")
+   tick_rmv = input("Enter the ticket Id to remove:").strip()
+   index = -1
+   for i in range(len(l)):
+      if l[i].split(",")[0].strip() == tick_rmv:
+         index = i
+         break
+   if index != -1:
+      l.remove(l[index])
+      sortList(l)
+      print("Ticket is successfully removed!!")
+   else:
+         print("Ticket Not Found") 
 
 def runEvents():
    pass
@@ -161,11 +197,11 @@ if login_type == "admin" :
       elif choice == 2:
         bookTicketAdmin(my_list)
       elif choice == 3:
-        displayAllTickets()
+        displayAllTickets(my_list)
       elif choice == 4:
-        changePriority()
+        changePriority(my_list)
       elif choice ==5:
-        disableTicket()  
+        disableTicket(my_list)  
       elif choice == 6:
         runEvents()   
       else:
