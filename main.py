@@ -114,7 +114,7 @@ def bookTicketAdmin(l):
    date_event = input("Enter the date of the event (YYYYMMDD): (202308(03->06))")
    priority = input("Enter the priority: ")
    ticket_id = larg_ticket + 10
-   ur_ticket = "tick"+str(ticket_id) + ", "+ event_id +", " + usern +", " + date_event +", " + priority
+   ur_ticket = "tick"+str(ticket_id) + ", "+ event_id +", " + usern +", " + date_event +", " + str(priority)+"\n"
    #https://www.w3schools.com/python/ref_list_append.asp
    l.append(ur_ticket)
    sortList(l)
@@ -140,7 +140,7 @@ def changePriority(l):
          date_event = l[i].split(",")[3].strip()
          nw_pr = input("Enter the new priority: ")
          ticket_id = l[i].split(",")[0].strip()
-         ur_ticket = "tick"+str(ticket_id) + ", "+ event_id +", " + usern +", " + date_event +", " + str(nw_pr)
+         ur_ticket = "tick"+str(ticket_id) + ", "+ event_id +", " + usern +", " + date_event +", " + str(nw_pr)+"\n"
          l[i] = ur_ticket
          sortList(l)
          print("---->>Priority is changed successfully!") 
@@ -180,23 +180,47 @@ def runEvents(l):
    displayAllTickets(l)
 
 def exitAdmin(l):
-   # To save the change in the file
+   pass
+   # To save the change in the file((BONUS)):
    # #https://stackoverflow.com/questions/13089234/replacing-text-in-a-file-with-python
-   # with open('tickets.txt') as infile, open('tickets.txt', 'w') as outfile:
-   #  for line in infile:
-   #      for ticket in l.items():
-   #          line = line.replace(ticket)
-   #      outfile.write(line)
-   # infile.close()     
-   print("Prog exited")
+   #chr = input("Do you want to save your work? y/n")
+   #if chr == "y": 
+   #  with open('tickets.txt') as infile, open('tickets.txt', 'w') as outfile:
+   #   for line in infile:
+   #       for ticket in l.items():
+   #           line = line.replace(ticket)
+   #       outfile.write(line)
+   #  infile.close()     
 
 
 # User Functions:
-def bookTicketUser():
-   pass
+def bookTicketUser(l,usrname):
+   print("To book a ticket follow these steps:")
+   larg_ticket = max(int(info.split(',')[0][4:]) for info in l)
+   event_id = input("Enter the event Id you want :(ev101/111/121/131) ")
+   date_event = input("Enter the date of the event (YYYYMMDD): (202308(03->06))")
+   priority = 0
+   ticket_id = larg_ticket + 10
+   ur_ticket = "tick"+str(ticket_id) + ", "+ event_id +", " + usrname +", " + date_event +", " + str(priority)+"\n"
+   l.append(ur_ticket)
+   sortList(l)
+   print("---->>Your ticket is booked successfully!")
 
-def exitUser():
-   pass
+def exitUser(l,usrname):
+   # To save the change in the file((BONUS)):
+   # #https://stackoverflow.com/questions/13089234/replacing-text-in-a-file-with-python
+   #chr = input("Do you want to save your work? y/n")
+   #if chr == "y": 
+    with open('tickets.txt', 'w') as writer:
+    # Alternatively you could use
+    # writer.writelines(reversed(dog_breeds))
+     for item in l:
+      writer.writelines(item)
+    writer.close()  
+    print("List after your editing :")
+    displayAllTickets(l)
+    print("Bye "+usrname+" !...")
+
 
 
 #main prog:
@@ -224,15 +248,17 @@ if login_type == "admin" :
       elif choice == 6:
         runEvents(my_list)   
       else:
-        exitAdmin(my_list)
+        print("Prog exited!!")
       adminMenu()
       choice = eval(input("Enter your choice: "))
+    exitAdmin(my_list)  
     print("Bye Admin!...")  
 else:
     while choice != 2 :
        if choice == 1 :
-          bookTicketUser()
+          bookTicketUser(my_list,login_type)
        else:
-          exitUser()
+          print("Prog exited!!")
        userMenu(login_type)   
        choice = eval(input("Enter your choice: "))    
+    exitUser(my_list,login_type)
