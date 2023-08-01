@@ -296,7 +296,7 @@ else:
        if choice == 1 :
           bookTicketUser(my_list,login_type)
        else:
-          print("Prog exited!!")
+          print("Program is exited!!")
        userMenu(login_type)   
        choice = eval(input("Enter your choice: "))    
     exitUser(my_list,login_type)
