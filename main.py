@@ -1,4 +1,7 @@
+# !!Supposing that today is 03/08/2023 and the events start on 03/08 and they end on 06/08 :
+
 # sort my list:
+# It has a time complexity of O(n^2) in the worst case
 def sortList(l):
    for x in range(len(l)):
     check_swap = False
@@ -28,6 +31,7 @@ def sortList(l):
         return l
          
 # the admin Menu :
+# has a constant time complexity of O(1)
 def adminMenu():
     print("-----------------------------------------------------------------------------------------------------")
     print("Hello, Admin!")
@@ -41,6 +45,7 @@ def adminMenu():
     print("7. Exit")
     print("-----------------------------------------------------------------------------------------------------")
 # the user Menu
+# has a constant time complexity of O(1)
 def userMenu(username):
     print("-----------------------------------------------------------------------------------------------------")
     print("Hello, " + username+"!")
@@ -50,20 +55,19 @@ def userMenu(username):
     print("-----------------------------------------------------------------------------------------------------")
 
 # the login function:
+# the time complexity of this function can be considered as O(1)(The while loop runs a maximum of 5 times, and each iteration contains basic input/output operations with constant time complexity)
 def displayLogin():
     times = 5
     while times > 0:
-        usr_name = input("Enter your Userame: ")
+        usr_name = input("Enter your Userame (if you want to login as admin keep ur username admin) : ")
         passw = input("Enter your Password (leave it empty if you're not an admin): ")
 
         if usr_name.lower() == "admin" and passw == "admin123123":
             adminMenu()
             return "admin"
-            break
         elif passw == "":
             userMenu(usr_name)
             return usr_name
-            break
         else:
             times -= 1
             print("Incorrect Username and/or Password.")
@@ -71,10 +75,12 @@ def displayLogin():
                 print(f"You have {times} attempts remaining.")
             else:
                 print("You have exceeded the maximum number of attempts.")
+                return None
  
  
 #Admin functions:
 # to display the ticket that has the highest nb
+# has a time complexity of O(n), where n is the length of the list.
 def displayStatistics(l):
    count_101 = 0
    count_111 = 0
@@ -106,18 +112,19 @@ def displayStatistics(l):
    print("---->> The event Id that has the highest nb of tickets is : "+ev_id)      
 
    print("") 
-#to Book a ticket:     
+# to Book a ticket:  
+# the time complexity can be considered as O(1) ( contains a few while loops and basic input/output operations, but their maximum number of iterations is constant)   
 def bookTicketAdmin(l):
    #https://stackoverflow.com/questions/57701738/what-is-use-0-in-input-split0
    larg_ticket = max(int(info.split(',')[0][4:]) for info in l)
    usern = input("Enter your username : ")
    #https://www.geeksforgeeks.org/python-do-while/
    while True :
-     event_id = input("Enter the event Id you want :(ev101/111/121/131) ")
+     event_id = input("Enter the event Id you want (ev101/111/121/131) :")
      if event_id =="ev101" or event_id =="ev111" or event_id =="ev121" or event_id =="ev131":
         break
    while True :  
-     date_event = int(input("Enter the date of the event (YYYYMMDD): (202308(03->06))"))
+     date_event = int(input("Enter the date of the event (YYYYMMDD)|(202308(03->06)) :"))
      if date_event < 20230803 or date_event > 20230806:
         print("Invalid date !!!")
      if date_event >= 20230803 and  date_event <= 20230806 :
@@ -131,12 +138,14 @@ def bookTicketAdmin(l):
    print("---->>Your ticket is booked successfully!")
 
 # to display all the tickets
+# has a time complexity of O(n), where n is the length of the list
 def displayAllTickets(l):
    print("The Tickets are: ")
    for info in l:
       print (info)
 
 # to change the event priority
+# has a time complexity of O(n), where n is the length of the list
 def changePriority(l):
    print("!!! To change a ticket priority enter its eventId and its priority ")
    ev_id = input("Enter the eventId :")
@@ -159,6 +168,7 @@ def changePriority(l):
       print("Ticket Not Found")           
    
 # to remove a ticket
+# has a time complexity of O(n), where n is the length of the list
 def disableTicket(l):
    # to remove an item at indicx i :https://stackoverflow.com/questions/627435/how-to-remove-an-element-from-a-list-by-index
    print("!!!To remove an Event from the list you should enter your ticket ID")
@@ -176,6 +186,7 @@ def disableTicket(l):
    else:
          print("Ticket Not Found") 
 # to display today's events and remove it from list
+# has a time complexity of O(n), where n is the length of the list
 def runEvents(l):
    x=3
    print("--->>>Today's Events:")
@@ -189,6 +200,7 @@ def runEvents(l):
    print("---->List after removing today's events :")
    displayAllTickets(l)
 # to exit and a bonus if the admin want to save his work or no
+# has a time complexity of O(n), where n is the length of the list
 def exitAdmin(l):
    # To save the change in the file((BONUS)):
    # #https://stackoverflow.com/questions/13089234/replacing-text-in-a-file-with-python
@@ -202,12 +214,13 @@ def exitAdmin(l):
       writer.close()  
       print("List after your editing :")
       displayAllTickets(l)
-      print("Bye Admin !...")
+   print("Bye Admin !...")   
          
 
 
 # User Functions:
 # to book a ticket by the user
+# time complexity can be considered as O(1)(contains a few while loops and basic input/output operations, but their maximum number of iterations is constant)
 def bookTicketUser(l,usrname):
    print("To book a ticket follow these steps:")
    larg_ticket = max(int(info.split(',')[0][4:]) for info in l)
@@ -228,11 +241,10 @@ def bookTicketUser(l,usrname):
    sortList(l)
    print("---->>Your ticket is booked successfully!")
 # make the user exit the prog and save the changes
+# has a time complexity of O(n), where n is the length of the list
 def exitUser(l,usrname):
    # To save the change in the file :
    # #https://stackoverflow.com/questions/13089234/replacing-text-in-a-file-with-python
-   #chr = input("Do you want to save your work? y/n")
-   #if chr == "y": 
     with open('tickets.txt', 'w') as writer:
     # Alternatively you could use
     # writer.writelines(list)
@@ -245,13 +257,17 @@ def exitUser(l,usrname):
 
 
 
-#main prog:
-
+# main prog:
+# the main part of the code involves the sortList() function, which has a time complexity of O(n^2) 
+# The rest of the functions mostly involve loops with time complexity O(n) or O(1) for some constant number of iterations. 
+# the overall time complexity of the code can be approximated as O(n^2).
+# Importing tickets from the text file into the  List 
 file = open('tickets.txt')
 my_list= list(file)
 print("The unsorted list is:", my_list)
 sortList(my_list)
 file.close()
+#Greeting the user and asking him to login 
 print("-----------------------------------------------------------------------------------------------------------")
 print("WELCOME!!! Here's the Login Form:")
 login_type = displayLogin()
@@ -284,3 +300,4 @@ else:
        userMenu(login_type)   
        choice = eval(input("Enter your choice: "))    
     exitUser(my_list,login_type)
+print(".....End Of The Program...")    
